@@ -3,7 +3,7 @@ clc;
 clear all;
 cla;
 
-%% ÏÔÊ¾ÉèÖÃ
+%% æ˜¾ç¤ºè®¾ç½®
 colorshape_real = 'bd';
 color_real = 'b';
 colorshape_p1 = 'm*';
@@ -13,41 +13,41 @@ markersize = 4;
 markersize2 = 3;
 pause_time = 0.3;
 
-% ¼ÓÔØµØÍ¼
+% åŠ è½½åœ°å›¾
 load MapT.mat;
-MM=size(G,1);%ĞĞÁĞÊı£¨±ØĞëÊÇÕı·½ĞÎ£©
-d=2;%Î¬¶È
+MM=size(G,1);%è¡Œåˆ—æ•°ï¼ˆå¿…é¡»æ˜¯æ­£æ–¹å½¢ï¼‰
+d=2;%ç»´åº¦
 grid on 
 set(gca,'Layer','top');
 figure(1) 
 axis([0,MM,0,MM]) 
-W = 0; color_W = 'k'; % Õ¼ÓÃÕ¤¸ñÊı-ºÚÉ«´ú±íÕ¼ÓÃ
-F = 0; color_F = 'w'; % ¿ÕÏĞÕ¤¸ñÊı-°×É«´ú±í¿ÕÏĞ
+W = 0; color_W = 'k'; % å ç”¨æ …æ ¼æ•°-é»‘è‰²ä»£è¡¨å ç”¨
+F = 0; color_F = 'w'; % ç©ºé—²æ …æ ¼æ•°-ç™½è‰²ä»£è¡¨ç©ºé—²
 
-N = 0; % Á£×ÓÊı
+N = 0; % ç²’å­æ•°
 
-% »­Í¼
+% ç”»å›¾
 for i=1:MM
     for j=1:MM
-        if G(i,j) == 1 %ºÚÉ«´ú±íÕ¼ÓÃ
-            %Õ¼ÓÃÇøÓò¼ÇÂ¼
+        if G(i,j) == 1 %é»‘è‰²ä»£è¡¨å ç”¨
+            %å ç”¨åŒºåŸŸè®°å½•
             W = W + 1;
             wall_spot(W,1) = i;
             wall_spot(W,2) = j;
-            % »­Í¼
+            % ç”»å›¾
             SetColor(wall_spot(W,:), color_W, G);
             hold on
-        else %°×É«´ú±í¿ÕÏĞ
-            %Á£×Ó³õÊ¼»¯
-            N = N + 1; %Á£×ÓÊı
-            P_pos(N,1) = i;%¸öÌåµ±Ç°Î»ÖÃ
+        else %ç™½è‰²ä»£è¡¨ç©ºé—²
+            %ç²’å­åˆå§‹åŒ–
+            N = N + 1; %ç²’å­æ•°
+            P_pos(N,1) = i;%ä¸ªä½“å½“å‰ä½ç½®
             P_pos(N,2) = j;
-            %¿ÕÏĞÇøÓò¼ÇÂ¼
+            %ç©ºé—²åŒºåŸŸè®°å½•
             F = F + 1; 
             free_spot(F,1) = i;
             free_spot(F,2) = j;
-            %P_pos(N,3)=1;%Ğı×ª½Ç¶È 1-´ÓÕı×ó£¬2-´Ó×óÉÏ£¬3-´ÓÕıÉÏ£¬...£¬8-´Ó×óÏÂ
-            % »­Í¼
+            %P_pos(N,3)=1;%æ—‹è½¬è§’åº¦ 1-ä»æ­£å·¦ï¼Œ2-ä»å·¦ä¸Šï¼Œ3-ä»æ­£ä¸Šï¼Œ...ï¼Œ8-ä»å·¦ä¸‹
+            % ç”»å›¾
             SetColor(free_spot(F,:), color_F, G);
             hold on 
         end 
@@ -57,7 +57,7 @@ pause(0.1);
 
 N
 
-%»úÆ÷ÈËÕæÊµÎ»ÖÃ
+%æœºå™¨äººçœŸå®ä½ç½®
 % P_pos_real = GetRandomPos(N, free_spot) 
 P_pos_real = [5,6];
 % P_pos_real = [5,69];
@@ -66,26 +66,26 @@ P_pos_real = [5,6];
 % P_pos_real = [61,79];
 % P_pos_real = [95,83];
 
-%% ³õÊ¼Î»ÖÃ¹À¼Æ
-%% Step1 Á£×Ó³õÊ¼»¯
+%% åˆå§‹ä½ç½®ä¼°è®¡
+%% Step1 ç²’å­åˆå§‹åŒ–
 
-w = 0.87; % ¹ßĞÔÈ¨ÖØ
-c_1 = 0.5;% ×ÔÎÒÑ§Ï°Òò×Ó
-c_2 = 0.5;% ÈºÌåÑ§Ï°Òò×Ó 
-v = rand(N, d);% ³õÊ¼ÖÖÈºµÄËÙ¶È
-vlimit = [-1.5, 1.5; -1.5, 1.5];% ÉèÖÃËÙ¶ÈÏŞÖÆ
+w = 0.87; % æƒ¯æ€§æƒé‡
+c_1 = 0.5;% è‡ªæˆ‘å­¦ä¹ å› å­
+c_2 = 0.5;% ç¾¤ä½“å­¦ä¹ å› å­ 
+v = rand(N, d);% åˆå§‹ç§ç¾¤çš„é€Ÿåº¦
+vlimit = [-1.5, 1.5; -1.5, 1.5];% è®¾ç½®é€Ÿåº¦é™åˆ¶
 xlimit = [0.51, MM-0.51; 0.51, MM-0.51];
 
-P_fitness = -inf(N, 1);% ¸öÌåµ±Ç°ÊÊÓ¦¶È
-P_best_pos = P_pos;% ¸öÌå×îÓÅÎ»ÖÃ
-P_best_fitness = -inf(N, 1);% ¸öÌå×îÓÅÊÊÓ¦¶È
+P_fitness = -inf(N, 1);% ä¸ªä½“å½“å‰é€‚åº”åº¦
+P_best_pos = P_pos;% ä¸ªä½“æœ€ä¼˜ä½ç½®
+P_best_fitness = -inf(N, 1);% ä¸ªä½“æœ€ä¼˜é€‚åº”åº¦
 
-L_best_num = 0;% ÁÚÓò×îÓÅ¸öÊı
-L_best_threshold = 0.03;% ³ÉÎªÁÚÓò×îÓÅµÄ×îµÍãĞÖµ
-L_best_pos = zeros(N, d);% ÁÚÓò×îÓÅÎ»ÖÃ
+L_best_num = 0;% é‚»åŸŸæœ€ä¼˜ä¸ªæ•°
+L_best_threshold = 0.03;% æˆä¸ºé‚»åŸŸæœ€ä¼˜çš„æœ€ä½é˜ˆå€¼
+L_best_pos = zeros(N, d);% é‚»åŸŸæœ€ä¼˜ä½ç½®
 P_min_distance = ones(N,1)*MM;
 
-%ÏÔÊ¾
+%æ˜¾ç¤º
 pos = GetPos(P_pos, MM);
 p1 = plot(pos(1,:), pos(2,:),colorshape_p1,'markersize',markersize);
 pos_R = GetPos(P_pos_real, MM);
@@ -99,29 +99,29 @@ delete(p1);
 
 %% Step2 PSO
 
-ger1 = 30;% ³õÊ¼Î»ÖÃÔ¤²âpsoµü´ú´ÎÊı
+ger1 = 30;% åˆå§‹ä½ç½®é¢„æµ‹psoè¿­ä»£æ¬¡æ•°
 real_scan_result = GetScanResult(G, P_pos_real);
 real_fitness = CalFitness(real_scan_result, real_scan_result)
 
 for iter1 = 1 : ger1
-    % »ñÈ¡ÊÊÓ¦¶È
+    % è·å–é€‚åº”åº¦
     for i = 1:N
         P_scan_result = GetScanResult(G, P_pos(i,:));
         P_fitness(i) =  CalFitness(real_scan_result, P_scan_result);
     end
     
-    % ¸üĞÂ×î¼ÑÊÊÓ¦¶È
+    % æ›´æ–°æœ€ä½³é€‚åº”åº¦
     for i = 1:N
         if P_best_fitness(i) < P_fitness(i)
-            P_best_fitness(i) = P_fitness(i); % ¸üĞÂ¸öÌåÀúÊ·×î¼ÑÊÊÓ¦¶È
-            P_best_pos(i,:) = P_pos(i,:);% ¸üĞÂ¸öÌåÀúÊ·×î¼ÑÎ»ÖÃ
+            P_best_fitness(i) = P_fitness(i); % æ›´æ–°ä¸ªä½“å†å²æœ€ä½³é€‚åº”åº¦
+            P_best_pos(i,:) = P_pos(i,:);% æ›´æ–°ä¸ªä½“å†å²æœ€ä½³ä½ç½®
         end 
     end
 %     
     
     if mod(iter1, 10) == 0 || iter1 == 1
 
-        % »ñÈ¡ÁÚÓò×îÓÅ½â
+        % è·å–é‚»åŸŸæœ€ä¼˜è§£
         for i = 1:N
             if abs(P_best_fitness(i) - real_fitness) < L_best_threshold
                 L_best_num = L_best_num + 1;
@@ -133,7 +133,7 @@ for iter1 = 1 : ger1
 %         Top_best_pos = Top_best_pos;
     end
     
-    % Æ¥ÅäÁÚÓò×îÓÅ½â
+    % åŒ¹é…é‚»åŸŸæœ€ä¼˜è§£
     for i = 1:N
         for j = 1:L_best_num
                 pdistance = ODistance(P_pos(i,:),Top_best_pos(j,:));
@@ -144,16 +144,16 @@ for iter1 = 1 : ger1
         end
     end
     
-    % ¸üĞÂËÙ¶È
+    % æ›´æ–°é€Ÿåº¦
     v = v * w + c_1 * rand *(P_best_pos - P_pos) + c_2 * rand *(L_best_pos - P_pos);
-    v = edgeLimit(v, vlimit, d);% ±ß½çÎ»ÖÃ´¦Àí
+    v = edgeLimit(v, vlimit, d);% è¾¹ç•Œä½ç½®å¤„ç†
     
 
-    % ¸üĞÂÎ»ÖÃ
+    % æ›´æ–°ä½ç½®
     P_pos_N = P_pos + v;
-    P_pos_N = edgeLimit(P_pos_N, xlimit, d);% ±ß½çÎ»ÖÃ´¦Àí
+    P_pos_N = edgeLimit(P_pos_N, xlimit, d);% è¾¹ç•Œä½ç½®å¤„ç†
     
-    % ±ÜÕÏ´¦Àí1
+    % é¿éšœå¤„ç†1
     P_pos_N_R = round(P_pos_N);    
     for i = 1:N 
         if G(P_pos_N_R(i,1),P_pos_N_R(i,2)) == 0
@@ -163,7 +163,7 @@ for iter1 = 1 : ger1
         end
     end
     
-    %ÏÔÊ¾
+    %æ˜¾ç¤º
     pos = GetPos(P_pos, MM);
     p1 = plot(pos(1,:), pos(2,:),colorshape_p1,'markersize',markersize);
     pos_Top = GetPos(Top_best_pos, MM);
@@ -174,10 +174,10 @@ for iter1 = 1 : ger1
     pause(pause_time);
     delete(p1);
     delete(p3);
-    %µü´ú´ÎÊı
+    %è¿­ä»£æ¬¡æ•°
 end
 
-%% Step3 ÖØ²ÉÑù
+%% Step3 é‡é‡‡æ ·
 min_distance_threshold = 2;
 for i = 1:N
     if P_min_distance(i) > min_distance_threshold
@@ -190,7 +190,7 @@ for i = 1:N
 end
 
 
-% ÏÔÊ¾
+% æ˜¾ç¤º
 pos = GetPos(P_pos, MM);
 p1 = plot(pos(1,:), pos(2,:),colorshape_resampling,'markersize',markersize);
 pos_Top = GetPos(Top_best_pos, MM);
@@ -267,7 +267,7 @@ end
 
 subswarm_N
 color_list_c  = rand(subswarm_N, 3);
-% ÏÔÊ¾
+% æ˜¾ç¤º
 for i = 1 : subswarm_N
     subswarm_current = subswarms(i,:);
     subswarm_current(subswarm_current==0)=[];
@@ -286,14 +286,14 @@ pause(pause_time);
 delete(p3);
  
 
-%% ×ËÌ¬×·×Ù
+%% å§¿æ€è¿½è¸ª
 v_real = [4,0;0,4;0,4;0,6;4,0;0,6;0,4;4,1;5,0;3,5;4,-2;6,0;4,-1;5,1;5,-1;5,1;5,-1;3,1;4,-1];
 % v_real = [4,-1;6,2;5,1;6,1;4,-2;6,0;5,-1;4,-2;0,-5;1,-4;3,-1;2,-3;-3,-5;-5,0;-3,-1;0,5;-1,6];
 % v_real = [4,4;4,4;6,1;4,2;1,4;0,5;-1,5;0,4;1,5;1,6;2,3;2,3;-1,4;-4,-1;-4,-1];
 % v_real = [4,1;4,2;0,4;1,4;1,4;0,5;-1,5;0,4;-5,0;-4,0;0,-4;1,-4;4,0];
 % v_real = [0,4;2,4;1,1];
 % v_real = [4,0;4,0;4,0;0,-4];
-%% ÒÆ¶¯
+%% ç§»åŠ¨
 ger3 = 10;
 dead_N = 0;
 for iter3 =1 : ger3
@@ -328,31 +328,31 @@ for iter3 =1 : ger3
             end
         end
     end
-    P_best_pos = P_pos;% ¸öÌå×îÓÅÎ»ÖÃ 
-    P_best_fitness = -inf(N, 1);% ¸öÌå×îÓÅÊÊÓ¦¶È
-    % ÏÔÊ¾ĞÂµÄÕæÊµÎ»ÖÃ
+    P_best_pos = P_pos;% ä¸ªä½“æœ€ä¼˜ä½ç½® 
+    P_best_fitness = -inf(N, 1);% ä¸ªä½“æœ€ä¼˜é€‚åº”åº¦
+    % æ˜¾ç¤ºæ–°çš„çœŸå®ä½ç½®
     cla reset;
     axis([0,MM,0,MM]) 
     W = 0; 
-    F = 0; % »­Í¼
-    % »­Í¼
+    F = 0; % ç”»å›¾
+    % ç”»å›¾
     for i=1:MM
         for j=1:MM
-            if G(i,j) == 1 %ºÚÉ«´ú±íÕ¼ÓÃ
-                %Õ¼ÓÃÇøÓò¼ÇÂ¼
+            if G(i,j) == 1 %é»‘è‰²ä»£è¡¨å ç”¨
+                %å ç”¨åŒºåŸŸè®°å½•
                 W = W + 1;
                 wall_spot(W,1) = i;
                 wall_spot(W,2) = j;
-                % »­Í¼
+                % ç”»å›¾
                 SetColor(wall_spot(W,:), color_W, G);
                 hold on
-            else %°×É«´ú±í¿ÕÏĞ
-                %¿ÕÏĞÇøÓò¼ÇÂ¼
+            else %ç™½è‰²ä»£è¡¨ç©ºé—²
+                %ç©ºé—²åŒºåŸŸè®°å½•
                 F = F + 1; 
                 free_spot(F,1) = i;
                 free_spot(F,2) = j;
-                %P_pos(N,3)=1;%Ğı×ª½Ç¶È 1-´ÓÕı×ó£¬2-´Ó×óÉÏ£¬3-´ÓÕıÉÏ£¬...£¬8-´Ó×óÏÂ
-                % »­Í¼
+                %P_pos(N,3)=1;%æ—‹è½¬è§’åº¦ 1-ä»æ­£å·¦ï¼Œ2-ä»å·¦ä¸Šï¼Œ3-ä»æ­£ä¸Šï¼Œ...ï¼Œ8-ä»å·¦ä¸‹
+                % ç”»å›¾
                 SetColor(free_spot(F,:), color_F, G);
                 hold on 
             end 
@@ -361,17 +361,17 @@ for iter3 =1 : ger3
     
     
     min_distance_threshold = 2;
-    %% ×ÓÈºÄÚ²¿
+    %% å­ç¾¤å†…éƒ¨
     real_scan_result = GetScanResult(G, P_pos_real);
     real_fitness = CalFitness(real_scan_result, real_scan_result);
     subswarm_fitness = -inf(subswarm_N,1);
     for s = 1 : subswarm_N
         s
-        %×ÓÈºÄÚ²¿Êı¾İ    
+        %å­ç¾¤å†…éƒ¨æ•°æ®    
         subswarm_current = subswarms(s,:);    
-        subswarm_current(subswarm_current==0)=[];% ¸Ã×ÓÈºÁ£×ÓÔÚP_psoÖĞµÄ±àºÅ
-        s_P_pos = P_pos(subswarm_current,:);% ¸Ã×ÓÈºÁ£×ÓÎ»ÖÃ
-        s_N = size(subswarm_current, 2);% ¸Ã×ÓÈºÁ£×Ó¸öÊı
+        subswarm_current(subswarm_current==0)=[];% è¯¥å­ç¾¤ç²’å­åœ¨P_psoä¸­çš„ç¼–å·
+        s_P_pos = P_pos(subswarm_current,:);% è¯¥å­ç¾¤ç²’å­ä½ç½®
+        s_N = size(subswarm_current, 2);% è¯¥å­ç¾¤ç²’å­ä¸ªæ•°
 
         s_P_fitness = -inf(s_N, 1);
         s_P_best_pos = s_P_pos;
@@ -380,7 +380,7 @@ for iter3 =1 : ger3
         s_G_best_pos = zeros(1, d);
         s_G_best_fitness = -inf;
 
-        % »ñÈ¡ÊÊÓ¦¶È
+        % è·å–é€‚åº”åº¦
         for i = 1:s_N
             I = subswarm_current(i);
             s_P_scan_result = GetScanResult(G, s_P_pos(i,:));
@@ -388,25 +388,25 @@ for iter3 =1 : ger3
             P_fitness(I) = s_P_fitness(i);
         end
 
-        % ¸üĞÂ×î¼ÑÊÊÓ¦¶È
+        % æ›´æ–°æœ€ä½³é€‚åº”åº¦
         for i = 1:s_N
             I = subswarm_current(i);
             if s_P_best_fitness(i) < s_P_fitness(i)
-                s_P_best_fitness(i) = s_P_fitness(i); % ¸üĞÂ¸öÌåÀúÊ·×î¼ÑÊÊÓ¦¶È
+                s_P_best_fitness(i) = s_P_fitness(i); % æ›´æ–°ä¸ªä½“å†å²æœ€ä½³é€‚åº”åº¦
                 s_P_best_pos(i,:) = s_P_pos(i,:);
                 P_best_fitness(I) = s_P_fitness(i);
                 P_best_pos(I,:) = s_P_pos(i,:);
-                % ¸üĞÂ¸öÌåÀúÊ·×î¼ÑÎ»ÖÃ
+                % æ›´æ–°ä¸ªä½“å†å²æœ€ä½³ä½ç½®
             end
         end
         if s_G_best_fitness  < max(s_P_fitness)
-            [s_G_best_fitness, max_pos] = max(s_P_fitness);   % ¸üĞÂÈºÌåÀúÊ·×î¼ÑÊÊÓ¦¶È
+            [s_G_best_fitness, max_pos] = max(s_P_fitness);   % æ›´æ–°ç¾¤ä½“å†å²æœ€ä½³é€‚åº”åº¦
             s_G_best_pos = s_P_pos(max_pos, :);
             L_best_pos(:,1) = s_G_best_pos(1);
             L_best_pos(:,2) = s_G_best_pos(2);
         end
         
-        %ÖØ²ÉÑù
+        %é‡é‡‡æ ·
         for i = 1:s_N 
             I = subswarm_current(i);
             pdistance = ODistance(s_P_pos(i,:),s_G_best_pos);
@@ -432,29 +432,29 @@ for iter3 =1 : ger3
         
     end
 
-    % »­Í¼
+    % ç”»å›¾
     cla reset;
     axis([0,MM,0,MM]) 
     W = 0; 
-    F = 0; % »­Í¼
-    % »­Í¼
+    F = 0; % ç”»å›¾
+    % ç”»å›¾
     for i=1:MM
         for j=1:MM
-            if G(i,j) == 1 %ºÚÉ«´ú±íÕ¼ÓÃ
-                %Õ¼ÓÃÇøÓò¼ÇÂ¼
+            if G(i,j) == 1 %é»‘è‰²ä»£è¡¨å ç”¨
+                %å ç”¨åŒºåŸŸè®°å½•
                 W = W + 1;
                 wall_spot(W,1) = i;
                 wall_spot(W,2) = j;
-                % »­Í¼
+                % ç”»å›¾
                 SetColor(wall_spot(W,:), color_W, G);
                 hold on
-            else %°×É«´ú±í¿ÕÏĞ
-                %¿ÕÏĞÇøÓò¼ÇÂ¼
+            else %ç™½è‰²ä»£è¡¨ç©ºé—²
+                %ç©ºé—²åŒºåŸŸè®°å½•
                 F = F + 1; 
                 free_spot(F,1) = i;
                 free_spot(F,2) = j;
-                %P_pos(N,3)=1;%Ğı×ª½Ç¶È 1-´ÓÕı×ó£¬2-´Ó×óÉÏ£¬3-´ÓÕıÉÏ£¬...£¬8-´Ó×óÏÂ
-                % »­Í¼
+                %P_pos(N,3)=1;%æ—‹è½¬è§’åº¦ 1-ä»æ­£å·¦ï¼Œ2-ä»å·¦ä¸Šï¼Œ3-ä»æ­£ä¸Šï¼Œ...ï¼Œ8-ä»å·¦ä¸‹
+                % ç”»å›¾
                 SetColor(free_spot(F,:), color_F, G);
                 hold on 
             end 
@@ -463,7 +463,7 @@ for iter3 =1 : ger3
 
     subswarm_fitness
     subswarm_fitness_threshold = 0.9;
-    %% Step3 ÖØ²ÉÑù
+    %% Step3 é‡é‡‡æ ·
     new_subswarm_N = 0;
     keep_flag = false(subswarm_N,1);
     for s = 1 : subswarm_N 
@@ -477,7 +477,7 @@ for iter3 =1 : ger3
         end
     end
     for s = 1 : subswarm_N
-       if ~keep_flag(s)%±»ÌÔÌ­
+       if ~keep_flag(s)%è¢«æ·˜æ±°
             subswarm_current = subswarms(s,:);
             subswarm_current(subswarm_current==0)=[];
             s_N = size(subswarm_current, 2);
@@ -488,7 +488,7 @@ for iter3 =1 : ger3
                 subswarm_new_current(subswarm_new_current==0)=[];
                 for i = 1 : s_N
                     I = subswarm_current(i);
-                    dead_N = dead_N + 1;%¼ÇÂ¼ÌÔÌ­Á£×Ó
+                    dead_N = dead_N + 1;%è®°å½•æ·˜æ±°ç²’å­
                     dead_P(dead_N,:) = P_pos(I,:);
                     seed = size(subswarm_new_current,2);
                     j = randi([1,seed]);
@@ -586,7 +586,7 @@ for iter3 =1 : ger3
 
     
     color_list_c  = rand(subswarm_N, 3);
-%     %ÌÔÌ­Á£×Ó
+%     %æ·˜æ±°ç²’å­
 %     for i = 1 : dead_N
 %         pos_D = GetPos(dead_P,MM);
 %         pd = plot(pos_D(1,:), pos_D(2,:),'*','Color',[0.5,0.5,0.5],'markersize',markersize);
@@ -669,54 +669,54 @@ else
 end
 
 
-for j = 0:MM-1 %×ó
+for j = 0:MM-1 %å·¦
     if G(x,y-j) == 1
         scan_result(1) = j-1;
         break;
     end
 end
 
-for j = 0:MM-1 %×óÉÏ
+for j = 0:MM-1 %å·¦ä¸Š
   if G(x-j,y-j) == 1
         scan_result(2) = j-1;
         break;
     end
 end
 
-for j = 0:MM-1 %ÉÏ
+for j = 0:MM-1 %ä¸Š
     if G(x-j,y) == 1
         scan_result(3) = j-1;
         break;
     end
 end
 
-for j = 0:MM %ÓÒÉÏ
+for j = 0:MM %å³ä¸Š
     if G(x-j,y+j) == 1
         scan_result(4) = j-1;
         break;
     end
 end
-for j = 0:MM-1 %ÓÒ
+for j = 0:MM-1 %å³
     if G(x,y+j) == 1
         scan_result(5) = j-1;
         break;
     end
 end
 
-for j = 0:MM %ÓÒÏÂ
+for j = 0:MM %å³ä¸‹
     if G(x+j,y+j) == 1
         scan_result(6) = j-1;
         break;
     end
 end
-for j = 0:MM-1 %ÏÂ
+for j = 0:MM-1 %ä¸‹
     if G(x+j,y) == 1
         scan_result(7) = j-1;
         break;
     end
 end
 
-for j = 0:MM-1 %×óÏÂ
+for j = 0:MM-1 %å·¦ä¸‹
     if G(x+j,y-j) == 1
         scan_result(8)=j-1;
         break;
