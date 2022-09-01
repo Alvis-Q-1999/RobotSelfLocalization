@@ -1,11 +1,11 @@
-%tbest²ßÂÔ:°Ù·Ö±È
-%ÏÔÊ¾qlearningÑ°Â·¹ı³Ì
+%tbestç­–ç•¥:ç™¾åˆ†æ¯”
+%æ˜¾ç¤ºqlearningå¯»è·¯è¿‡ç¨‹
 function mainNpso4_test()
 clc;
 clear all;
 cla;
 
-%% ÏÔÊ¾ÉèÖÃ
+%% æ˜¾ç¤ºè®¾ç½®
 colorshape_real = 'bd';
 color_real = 'b';
 colorshape_p1 = 'm*';
@@ -17,31 +17,31 @@ markersize2 = 3;
 pause_time = 0.3;
 format long g
 color_test  = [0.9,0.9,0.9];
-% ¼ÓÔØµØÍ¼
+% åŠ è½½åœ°å›¾
 load Map50_2.mat G;
-MM=size(G,1);%ĞĞÁĞÊı£¨±ØĞëÊÇÕı·½ĞÎ£©
-d=2;%Î¬¶È
+MM=size(G,1);%è¡Œåˆ—æ•°ï¼ˆå¿…é¡»æ˜¯æ­£æ–¹å½¢ï¼‰
+d=2;%ç»´åº¦
 grid on 
 set(gca,'Layer','top');
 figure(1) 
 axis([0,MM,0,MM]) 
-W = 0; color_W = 'k'; % Õ¼ÓÃÕ¤¸ñÊı-ºÚÉ«´ú±íÕ¼ÓÃ
-F = 0; color_F = 'w'; % ¿ÕÏĞÕ¤¸ñÊı-°×É«´ú±í¿ÕÏĞ
+W = 0; color_W = 'k'; % å ç”¨æ …æ ¼æ•°-é»‘è‰²ä»£è¡¨å ç”¨
+F = 0; color_F = 'w'; % ç©ºé—²æ …æ ¼æ•°-ç™½è‰²ä»£è¡¨ç©ºé—²
 N = 0;
 wall_spot = [];
 free_spot = [];
 P_Opos = [];
 test_free_spot = [];
-% »­Í¼
+% ç”»å›¾
 for i=1:MM
     for j=1:MM
-        if G(i,j) == 1 %ºÚÉ«´ú±íÕ¼ÓÃ
-            wall_spot = [wall_spot; i j];%Õ¼ÓÃÇøÓò¼ÇÂ¼
+        if G(i,j) == 1 %é»‘è‰²ä»£è¡¨å ç”¨
+            wall_spot = [wall_spot; i j];%å ç”¨åŒºåŸŸè®°å½•
             SetColor([i j], color_W, G); 
             hold on
-        else %°×É«´ú±í¿ÕÏĞ
-            P_Opos = [P_Opos; i j]; %Á£×Ó³õÊ¼»¯
-            free_spot = [free_spot; i j]; %¿ÕÏĞÇøÓò¼ÇÂ¼
+        else %ç™½è‰²ä»£è¡¨ç©ºé—²
+            P_Opos = [P_Opos; i j]; %ç²’å­åˆå§‹åŒ–
+            free_spot = [free_spot; i j]; %ç©ºé—²åŒºåŸŸè®°å½•
             SetColor([i j], color_F, G); 
             hold on
         end 
@@ -53,24 +53,24 @@ F = size(free_spot, 1);
 N = size(P_Opos, 1);
 
 
-%% Step1 ³õÊ¼»¯
+%% Step1 åˆå§‹åŒ–
 ElRw =100;
 mean_dFRw=0.1;
 dFVw=100;
 des_R=2;
 
-w = 0.89; % ¹ßĞÔÈ¨ÖØ
-c_1 = 0.3;% ×ÔÎÒÑ§Ï°Òò×Ó
-c_2 = 0.7;% ÈºÌåÑ§Ï°Òò×Ó 
-v = rand(N, d);% ³õÊ¼ÖÖÈºµÄËÙ¶È
-vlimit = [-1.5, 1.5; -1.5, 1.5];% ÉèÖÃËÙ¶ÈÏŞÖÆ
+w = 0.89; % æƒ¯æ€§æƒé‡
+c_1 = 0.3;% è‡ªæˆ‘å­¦ä¹ å› å­
+c_2 = 0.7;% ç¾¤ä½“å­¦ä¹ å› å­ 
+v = rand(N, d);% åˆå§‹ç§ç¾¤çš„é€Ÿåº¦
+vlimit = [-1.5, 1.5; -1.5, 1.5];% è®¾ç½®é€Ÿåº¦é™åˆ¶
 xlimit = [0.51, MM-0.51; 0.51, MM-0.51];
 fitness_T = 0.05;
-L_best_threshold = 0.03;% ³ÉÎªÁÚÓò×îÓÅµÄ×îµÍãĞÖµ
+L_best_threshold = 0.03;% æˆä¸ºé‚»åŸŸæœ€ä¼˜çš„æœ€ä½é˜ˆå€¼
 
 ger_ql = 100;
-alpha = 0.3; %Ñ§Ï°ÂÊ
-gamma = 0.4; %ÕÛ¿ÛÒò×Ó
+alpha = 0.3; %å­¦ä¹ ç‡
+gamma = 0.4; %æŠ˜æ‰£å› å­
 epsilon_greed = 0.01;
 fitness_var_threshold = 0.05;
 
@@ -88,7 +88,7 @@ ElRg = [];
 mean_dFRg = [];
 dFVg =[];
 real_fitness = 1;
-ger1 = 100;% ³õÊ¼Î»ÖÃÔ¤²âpsoµü´ú´ÎÊı
+ger1 = 100;% åˆå§‹ä½ç½®é¢„æµ‹psoè¿­ä»£æ¬¡æ•°
 
 for rpE = 1:rp_time
 for stateE = 1 :10:free_spot_N
@@ -101,28 +101,28 @@ if ~st_exist
     st_index = 1;
 end
 P_pos = P_Opos;
-P_fitness = -inf(N, 1);% ¸öÌåµ±Ç°ÊÊÓ¦¶È
-P_best_pos = P_pos;% ¸öÌå×îÓÅÎ»ÖÃ
-P_best_fitness = -inf(N, 1);% ¸öÌå×îÓÅÊÊÓ¦¶È
+P_fitness = -inf(N, 1);% ä¸ªä½“å½“å‰é€‚åº”åº¦
+P_best_pos = P_pos;% ä¸ªä½“æœ€ä¼˜ä½ç½®
+P_best_fitness = -inf(N, 1);% ä¸ªä½“æœ€ä¼˜é€‚åº”åº¦
 
-L_best_num = 0;% ÁÚÓò×îÓÅ¸öÊı
-L_best_pos = zeros(N, d);% ÁÚÓò×îÓÅÎ»ÖÃ
+L_best_num = 0;% é‚»åŸŸæœ€ä¼˜ä¸ªæ•°
+L_best_pos = zeros(N, d);% é‚»åŸŸæœ€ä¼˜ä½ç½®
 P_min_distance = ones(N,1)*MM;
 Top_best_pos = [];
-L_best_threshold = 0.02;% ³ÉÎªÁÚÓò×îÓÅµÄ×îµÍãĞÖµ
+L_best_threshold = 0.02;% æˆä¸ºé‚»åŸŸæœ€ä¼˜çš„æœ€ä½é˜ˆå€¼
 %% pso
 
 for iter1 = 1 : ger1
-    % »ñÈ¡ÊÊÓ¦¶È
+    % è·å–é€‚åº”åº¦
     for i = 1:N
         P_scan_result = GetScanResult(G, P_pos(i,:));
         P_fitness(i) =  CalFitness(state, P_scan_result);
     end
-    % ¸üĞÂ×î¼ÑÊÊÓ¦¶È
+    % æ›´æ–°æœ€ä½³é€‚åº”åº¦
     for i = 1:N
         if P_best_fitness(i) < P_fitness(i)
-            P_best_fitness(i) = P_fitness(i); % ¸üĞÂ¸öÌåÀúÊ·×î¼ÑÊÊÓ¦¶È
-            P_best_pos(i,:) = P_pos(i,:);% ¸üĞÂ¸öÌåÀúÊ·×î¼ÑÎ»ÖÃ
+            P_best_fitness(i) = P_fitness(i); % æ›´æ–°ä¸ªä½“å†å²æœ€ä½³é€‚åº”åº¦
+            P_best_pos(i,:) = P_pos(i,:);% æ›´æ–°ä¸ªä½“å†å²æœ€ä½³ä½ç½®
         end 
     end
     
@@ -133,7 +133,7 @@ for iter1 = 1 : ger1
 % 
 %     
     if mod(iter1, 10) == 0 || iter1 == 1
-        % »ñÈ¡ÁÚÓò×îÓÅ½â
+        % è·å–é‚»åŸŸæœ€ä¼˜è§£
         
         for i = 1:N
             if abs(P_best_fitness(i) - real_fitness) < L_best_threshold
@@ -144,7 +144,7 @@ for iter1 = 1 : ger1
         L_best_threshold = L_best_threshold / 5;
     end
     
-    % Æ¥ÅäÁÚÓò×îÓÅ½â
+    % åŒ¹é…é‚»åŸŸæœ€ä¼˜è§£
     for i = 1:N
         for j = 1:L_best_num
                 pdistance = ODistance(P_pos(i,:),Top_best_pos(j,:));
@@ -155,16 +155,16 @@ for iter1 = 1 : ger1
         end
     end
     
-    % ¸üĞÂËÙ¶È
+    % æ›´æ–°é€Ÿåº¦
     v = v * w + c_1 * rand *(P_best_pos - P_pos) + c_2 * rand *(L_best_pos - P_pos);
-    v = edgeLimit(v, vlimit, d);% ±ß½çÎ»ÖÃ´¦Àí
+    v = edgeLimit(v, vlimit, d);% è¾¹ç•Œä½ç½®å¤„ç†
     
 
-    % ¸üĞÂÎ»ÖÃ
+    % æ›´æ–°ä½ç½®
     P_pos_N = P_pos + v;
-    P_pos_N = edgeLimit(P_pos_N, xlimit, d);% ±ß½çÎ»ÖÃ´¦Àí
+    P_pos_N = edgeLimit(P_pos_N, xlimit, d);% è¾¹ç•Œä½ç½®å¤„ç†
     P_pos = P_pos_N;
-% %     ±ÜÕÏ´¦Àí1
+% %     é¿éšœå¤„ç†1
 %     P_pos_N_R = round(P_pos_N);    
 %     for i = 1:N 
 %         if G(P_pos_N_R(i,1),P_pos_N_R(i,2)) == 0
@@ -174,7 +174,7 @@ for iter1 = 1 : ger1
 %         end
 %     end
     
-    %ÏÔÊ¾
+    %æ˜¾ç¤º
     if mod(iter1, 10) == 0 || iter1 == 1 || iter1==ger1
     pos = GetPos(P_pos, MM);
     p1 = plot(pos(1,:), pos(2,:),colorshape_p1,'markersize',markersize);
@@ -188,11 +188,11 @@ for iter1 = 1 : ger1
     delete(p3);
     delete(pr);
     end
-    %µü´ú´ÎÊı
+    %è¿­ä»£æ¬¡æ•°
 end
 
 
-%% Step3 ÖØ²ÉÑù
+%% Step3 é‡é‡‡æ ·
 min_distance_threshold = 2;
 for i = 1:N
     if P_min_distance(i) > min_distance_threshold
@@ -205,7 +205,7 @@ for i = 1:N
 end
 
 
-% ÏÔÊ¾
+% æ˜¾ç¤º
 pos = GetPos(P_pos, MM);
 p1 = plot(pos(1,:), pos(2,:),colorshape_resampling,'markersize',markersize);
 pos_Top = GetPos(Top_best_pos, MM);
@@ -286,8 +286,8 @@ for i = 1 : subswarm_N
     subswarm_current = subswarms(i,:);
     subswarm_current(subswarm_current==0)=[];
     s_P_pos = P_pos(subswarm_current,:);
-    potential_pos (i,:)= mean(s_P_pos); %Ç±ÔÚÎ»Ì¬
-    % ÏÔÊ¾
+    potential_pos (i,:)= mean(s_P_pos); %æ½œåœ¨ä½æ€
+    % æ˜¾ç¤º
     pos = GetPos(s_P_pos, MM);
     p2(i) = plot(pos(1,:), pos(2,:),'*','Color',color_list_c(i,:),'markersize',markersize);    
     pos_pp = GetPos(potential_pos, MM);
@@ -317,9 +317,9 @@ for i = 1:potential_pos_N
 end
 
 %% qlearning
-%qlearning²ÎÊı
+%qlearningå‚æ•°
 
-%³õÊ¼»¯
+%åˆå§‹åŒ–
 p_line = [];
 %ql
 for ter_ql = 1 : ger_ql 
@@ -333,7 +333,7 @@ for ter_ql = 1 : ger_ql
         end
     end
 %             possible_action
-    % Ñ¡action
+    % é€‰action
 
     if rand < epsilon_greed
         action = randsrc(1,1, find(state == max(state)));
@@ -343,11 +343,11 @@ for ter_ql = 1 : ger_ql
 %         PrintMove (action);
 
 
-    %×ª»»state-ÒÆ¶¯
+    %è½¬æ¢state-ç§»åŠ¨
     last_P_pos_real = P_pos_real;
     P_pos_real = Move(P_pos_real, action);
     potential_pos = Move(potential_pos, action);
-    potential_pos = edgeLimit(potential_pos, xlimit, d); % ±ß½çÎ»ÖÃ´¦Àí
+    potential_pos = edgeLimit(potential_pos, xlimit, d); % è¾¹ç•Œä½ç½®å¤„ç†
 
 
     delete(pr);
@@ -362,8 +362,8 @@ for ter_ql = 1 : ger_ql
     end
     pause(pause_time);
 %             
-    %ÔÚQ±íÖĞÔö¼Ó/²éÕÒµ±Ç°state
-    last_st_index = st_index; %¼ÇÂ¼ÉÏÒ»stateÔÚQ±íµÄÎ»ÖÃ(ĞĞÊı)
+    %åœ¨Qè¡¨ä¸­å¢åŠ /æŸ¥æ‰¾å½“å‰state
+    last_st_index = st_index; %è®°å½•ä¸Šä¸€stateåœ¨Qè¡¨çš„ä½ç½®(è¡Œæ•°)
     state = GetScanResult(G, P_pos_real);
     [st_exist, st_index] = ismember(state, Qtable(:, 1:8), 'rows');
     if ~st_exist
@@ -377,13 +377,13 @@ for ter_ql = 1 : ger_ql
         P_scan_result = GetScanResult(G, potential_pos(i, :));
         potential_pos_fitness_new(i) = CalFitness(state, P_scan_result);
     end
-    fitness_var = (potential_pos_fitness - potential_pos_fitness_new);%fitness±ä»¯Á¿
+    fitness_var = (potential_pos_fitness - potential_pos_fitness_new);%fitnesså˜åŒ–é‡
 
     eliminate_potential_pos = [];
-    eliminate_potential_pos = potential_pos(fitness_var >= fitness_var_threshold,:); %±»ÌÔÌ­Ç±ÔÚÎ»Ì¬
-    eliminate_potential_pos_N = size(eliminate_potential_pos,1); %±»ÌÔÌ­Ç±ÔÚÎ»Ì¬¸öÊı
+    eliminate_potential_pos = potential_pos(fitness_var >= fitness_var_threshold,:); %è¢«æ·˜æ±°æ½œåœ¨ä½æ€
+    eliminate_potential_pos_N = size(eliminate_potential_pos,1); %è¢«æ·˜æ±°æ½œåœ¨ä½æ€ä¸ªæ•°
     dFR = fitness_var(fitness_var >= fitness_var_threshold);
-    ElR = eliminate_potential_pos_N / potential_pos_N;% reward¹«Ê½
+    ElR = eliminate_potential_pos_N / potential_pos_N;% rewardå…¬å¼
     if numel(dFR) == 0
         sum_dFR = 0;
         dFV =  0;
