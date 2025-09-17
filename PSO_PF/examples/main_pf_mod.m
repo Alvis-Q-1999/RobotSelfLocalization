@@ -18,46 +18,18 @@ markersize = 4;
 markersize2 = 3;
 pause_time = 0.3;
 
-% 加载地图
-load MapT.mat;
-MM=size(G,1);%行列数（必须是正方形）
-d=2;%维度
-grid on 
-set(gca,'Layer','top');
-figure(1) 
-axis([0,MM,0,MM]) 
-W = 0; color_W = 'k'; % 占用栅格数-黑色代表占用
-F = 0; color_F = 'w'; % 空闲栅格数-白色代表空闲
 
-N = 0; % 粒子数
+load('MapT.mat');                  % 变量 G
+MM = size(G,1);                    % 行列数（正方形）
+d  = 2;                            % 维度
 
-% 画图
-for i=1:MM
-    for j=1:MM
-        if G(i,j) == 1 %黑色代表占用
-            %占用区域记录
-            W = W + 1;
-            wall_spot(W,1) = i;
-            wall_spot(W,2) = j;
-            % 画图
-            drawGridCell(wall_spot(W,:), color_W, G);
-            hold on
-        else %白色代表空闲
-            %粒子初始化
-            N = N + 1; %粒子数
-            P_pos(N,1) = i;%个体当前位置
-            P_pos(N,2) = j;
-            %空闲区域记录
-            F = F + 1; 
-            free_spot(F,1) = i;
-            free_spot(F,2) = j;
-            %P_pos(N,3)=1;%旋转角度 1-从正左，2-从左上，3-从正上，...，8-从左下
-            % 画图
-            drawGridCell(free_spot(F,:), color_F, G);
-            hold on 
-        end 
-    end 
-end 
+figure(1);
+plotMap(G);                        % 黑=占用(1), 白=空闲(0)
+grid on; set(gca,'Layer','top'); axis([0,MM,0,MM]); hold on;
+
+%% 初始化粒子/空闲/障碍
+[P_pos, free_spot, wall_spot, N] = initParticles(G);
+
 pause(0.1);
 
 N
@@ -169,16 +141,10 @@ for iter1 = 1 : ger1
     end
     
     %显示
-    pos = gridCoord(P_pos, MM);
-    p1 = plot(pos(1,:), pos(2,:),colorshape_p1,'markersize',markersize);
-    pos_Top = gridCoord(Top_best_pos, MM);
-    p3 = plot(pos_Top(1,:), pos_Top(2,:),'d','Color',color_lbest,'MarkerFaceColor',color_lbest,'markersize',markersize2);
-    pos_R = gridCoord(P_pos_real, MM);
-    pr = plot(pos_R(1,:), pos_R(2,:),colorshape_real,'MarkerFaceColor',color_real);
-    
+    [hParticles, hTop, hReal] = plotParticles(G, P_pos, Top_best_pos, P_pos_real)
     pause(pause_time);
-    delete(p1);
-    delete(p3);
+    delete(hParticles);
+    delete(hTop);
     %迭代次数
 end
 
@@ -196,15 +162,13 @@ end
 
 
 % 显示
-pos = gridCoord(P_pos, MM);
-p1 = plot(pos(1,:), pos(2,:),colorshape_resampling,'markersize',markersize);
-pos_Top = gridCoord(Top_best_pos, MM);
-p3 = plot(pos_Top(1,:), pos_Top(2,:),'d','Color',color_lbest,'MarkerFaceColor',color_lbest,'markersize',markersize2);
-pos_R = gridCoord(P_pos_real, MM);
-pr = plot(pos_R(1,:), pos_R(2,:),colorshape_real,'MarkerFaceColor',color_real);
+
+[hParticles, hTop, hReal] = plotParticles(G, P_pos, Top_best_pos, P_pos_real);
+
+
 pause(pause_time);
-delete(p1);
-delete(p3);
+delete(hParticles);
+delete(hTop);
 
 %% DBSCAN
 epsilon = 3;
@@ -281,23 +245,17 @@ for i = 1 : subswarm_N
     p2 = plot(pos(1,:), pos(2,:),'*','Color',color_list_c(i,:),'markersize',markersize);
     
 end
-pos_Top = gridCoord(Top_best_pos, MM);
-p3 = plot(pos_Top(1,:), pos_Top(2,:),'d','Color',color_lbest,'MarkerFaceColor',color_lbest,'markersize',markersize2);
-pos_R = gridCoord(P_pos_real, MM);
-pr = plot(pos_R(1,:), pos_R(2,:),colorshape_real,'MarkerFaceColor',color_real);
+
+[~, hTop, hReal] = plotParticles(G, [], Top_best_pos, P_pos_real);
 
 pause(pause_time);
 
-delete(p3);
+delete(hTop);
  
 
 %% 姿态追踪
 v_real = [4,0;0,4;0,4;0,6;4,0;0,6;0,4;4,1;5,0;3,5;4,-2;6,0;4,-1;5,1;5,-1;5,1;5,-1;3,1;4,-1];
-% v_real = [4,-1;6,2;5,1;6,1;4,-2;6,0;5,-1;4,-2;0,-5;1,-4;3,-1;2,-3;-3,-5;-5,0;-3,-1;0,5;-1,6];
-% v_real = [4,4;4,4;6,1;4,2;1,4;0,5;-1,5;0,4;1,5;1,6;2,3;2,3;-1,4;-4,-1;-4,-1];
-% v_real = [4,1;4,2;0,4;1,4;1,4;0,5;-1,5;0,4;-5,0;-4,0;0,-4;1,-4;4,0];
-% v_real = [0,4;2,4;1,1];
-% v_real = [4,0;4,0;4,0;0,-4];
+
 %% 移动
 ger3 = 10;
 dead_N = 0;
@@ -338,34 +296,9 @@ for iter3 =1 : ger3
     P_best_pos = P_pos;% 个体最优位置 
     P_best_fitness = -inf(N, 1);% 个体最优适应度
     % 显示新的真实位置
-    cla reset;
-    axis([0,MM,0,MM]) 
-    W = 0; 
-    F = 0; % 画图
-    % 画图
-    for i=1:MM
-        for j=1:MM
-            if G(i,j) == 1 %黑色代表占用
-                %占用区域记录
-                W = W + 1;
-                wall_spot(W,1) = i;
-                wall_spot(W,2) = j;
-                % 画图
-                drawGridCell(wall_spot(W,:), color_W, G);
-                hold on
-            else %白色代表空闲
-                %空闲区域记录
-                F = F + 1; 
-                free_spot(F,1) = i;
-                free_spot(F,2) = j;
-                %P_pos(N,3)=1;%旋转角度 1-从正左，2-从左上，3-从正上，...，8-从左下
-                % 画图
-                drawGridCell(free_spot(F,:), color_F, G);
-                hold on 
-            end 
-        end 
-    end 
-    
+
+    cla reset; 
+    plotMap(G);
     
     min_distance_threshold = 2;
     %% 子群内部
@@ -427,45 +360,15 @@ for iter3 =1 : ger3
                 P_best_fitness(I) = s_P_fitness(i);
             end
         end
-        pos = gridCoord(s_P_pos, MM);
-        p2 =plot(pos(1,:), pos(2,:),'*','Color',color_list_c(s,:),'markersize',markersize);
-        pos_g = gridCoord(s_G_best_pos, MM);
-        p3 = plot(pos_g(1,:), pos_g(2,:),'rd','MarkerFaceColor',color_list_c(s,:));
-        pos_R = gridCoord(P_pos_real, MM);
-        pr = plot(pos_R(1,:), pos_R(2,:),colorshape_real,'MarkerFaceColor',color_real);
-        
+        [hParticles, hTop, hReal] = plotParticles(G, P_pos, Top_best_pos, P_pos_real);
+
         subswarm_fitness(s) = mean(s_P_best_fitness);
         
     end
 
     % 画图
-    cla reset;
-    axis([0,MM,0,MM]) 
-    W = 0; 
-    F = 0; % 画图
-    % 画图
-    for i=1:MM
-        for j=1:MM
-            if G(i,j) == 1 %黑色代表占用
-                %占用区域记录
-                W = W + 1;
-                wall_spot(W,1) = i;
-                wall_spot(W,2) = j;
-                % 画图
-                drawGridCell(wall_spot(W,:), color_W, G);
-                hold on
-            else %白色代表空闲
-                %空闲区域记录
-                F = F + 1; 
-                free_spot(F,1) = i;
-                free_spot(F,2) = j;
-                %P_pos(N,3)=1;%旋转角度 1-从正左，2-从左上，3-从正上，...，8-从左下
-                % 画图
-                drawGridCell(free_spot(F,:), color_F, G);
-                hold on 
-            end 
-        end 
-    end 
+    cla reset; 
+    plotMap(G);
 
     subswarm_fitness
     subswarm_fitness_threshold = 0.9;
