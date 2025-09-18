@@ -36,8 +36,8 @@ N
 
 %机器人真实位置
 % P_pos_real = GetRandomPos(N, free_spot) 
-P_pos_real = [5,6];
-% P_pos_real = [5,69];
+% P_pos_real = [5,6];
+P_pos_real = [5,69];
 % P_pos_real = [46,30];
 % P_pos_real = [59,23];
 % P_pos_real = [61,79];
@@ -141,7 +141,7 @@ for iter1 = 1 : ger1
     end
     
     %显示
-    [hParticles, hTop, hReal] = plotParticles(G, P_pos, Top_best_pos, P_pos_real)
+    [hParticles, hTop, hReal] = plotParticles(G, P_pos, Top_best_pos, P_pos_real);
     pause(pause_time);
     delete(hParticles);
     delete(hTop);
@@ -255,44 +255,70 @@ delete(hTop);
 
 %% 姿态追踪
 v_real = [4,0;0,4;0,4;0,6;4,0;0,6;0,4;4,1;5,0;3,5;4,-2;6,0;4,-1;5,1;5,-1;5,1;5,-1;3,1;4,-1];
-
+[dirIdx, baseDir] = chooseOpenDirection(G, P_pos_real);
 %% 移动
 ger3 = 10;
 dead_N = 0;
 for iter3 =1 : ger3
     v_real(iter3,:)
-    P_pos_real = P_pos_real + v_real(iter3,:);
+    
+    v_step = biasedConeWalker(G, P_pos_real, [1 6], 4, 1.5);
+
+    
+    P_pos_real = moveRealWithObstacles(G, P_pos_real, v_step);
     P_pos_real = clamp(P_pos_real, xlimit, d)
     
-    stepx = v_real(iter3,1)/abs(v_real(iter3,1));
-    stepy = v_real(iter3,2)/abs(v_real(iter3,2));
-    for i = 1:N 
-        for x = 1:v_real(iter3,1)
-            P_x = P_pos(i,1);
-            P_x_round = round(P_x) + stepx; 
-            P_y_round = round(P_pos(i,2));
-            if P_x_round >= MM || P_x_round <= 1
-                break;
-            elseif G(P_x_round,P_y_round) == 1
-                break;
-            else
-                P_pos(i,1) = P_x + stepx + rand(1,1)*0.5;
+%     stepx = v_real(iter3,1)/abs(v_real(iter3,1));
+%     stepy = v_real(iter3,2)/abs(v_real(iter3,2));
+%     for i = 1:N 
+%         for x = 1:v_real(iter3,1)
+%             P_x = P_pos(i,1);
+%             P_x_round = round(P_x) + stepx; 
+%             P_y_round = round(P_pos(i,2));
+%             if P_x_round >= MM || P_x_round <= 1
+%                 break;
+%             elseif G(P_x_round,P_y_round) == 1
+%                 break;
+%             else
+%                 P_pos(i,1) = P_x + stepx + rand(1,1)*0.5;
+%             end
+%         end
+%         
+%         for y = 1:v_real(iter3,2)
+%             P_y= P_pos(i,2) ;
+%             P_x_round = round(P_pos(i,1)); 
+%             P_y_round = round(P_y) + stepy;
+%             if P_y_round >= MM || P_y_round <= 1
+%                 break;
+%             elseif G(P_x_round,P_y_round) == 1
+%                 break;
+%             else
+%                 P_pos(i,2) = P_y + stepy + rand(1,1)*0.5;
+%             end
+%         end
+%     end
+
+    stepx = sign(v_step(1)); stepy = sign(v_step(2));
+        for i = 1:N
+            for x = 1:abs(v_step(1))
+                P_x = P_pos(i,1);
+                P_x_round = round(P_x) + stepx;
+                P_y_round = round(P_pos(i,2));
+                if P_x_round >= MM || P_x_round <= 1, break;
+                elseif G(P_x_round, P_y_round) == 1, break;
+                else, P_pos(i,1) = P_x + stepx + rand*0.5;
+                end
+            end
+            for y = 1:abs(v_step(2))
+                P_y = P_pos(i,2);
+                P_x_round = round(P_pos(i,1));
+                P_y_round = round(P_y) + stepy;
+                if P_y_round >= MM || P_y_round <= 1, break;
+                elseif G(P_x_round, P_y_round) == 1, break;
+                else, P_pos(i,2) = P_y + stepy + rand*0.5;
+                end
             end
         end
-        
-        for y = 1:v_real(iter3,2)
-            P_y= P_pos(i,2) ;
-            P_x_round = round(P_pos(i,1)); 
-            P_y_round = round(P_y) + stepy;
-            if P_y_round >= MM || P_y_round <= 1
-                break;
-            elseif G(P_x_round,P_y_round) == 1
-                break;
-            else
-                P_pos(i,2) = P_y + stepy + rand(1,1)*0.5;
-            end
-        end
-    end
     P_best_pos = P_pos;% 个体最优位置 
     P_best_fitness = -inf(N, 1);% 个体最优适应度
     % 显示新的真实位置
