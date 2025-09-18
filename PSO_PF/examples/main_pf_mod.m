@@ -19,7 +19,7 @@ markersize2 = 3;
 pause_time = 0.1;
 
 
-load('Map_uniform_mixed.mat');                  % 变量 G
+load('map_h_1.mat');                  % 变量 G
 MM = size(G,1);                    % 行列数（正方形）
 d  = 2;                            % 维度
 
@@ -35,8 +35,8 @@ pause(0.1);
 N
 
 %机器人真实位置
-P_pos_real = GetRandomPos(N, free_spot) 
-% P_pos_real = [5,6];
+% P_pos_real = GetRandomPos(N, free_spot) 
+P_pos_real = [22,13];
 % P_pos_real = [5,69];
 % P_pos_real = [46,30];
 % P_pos_real = [59,23];
@@ -263,7 +263,7 @@ for iter3 =1 : ger3
     v_real(iter3,:)
     
 %     v_step = biasedConeWalker(G, P_pos_real, [1 10], 4, 1.5);
-    v_step = biasedRandomStep(baseDir, [1 10], 0.4);   % 长度1~6，20%侧偏
+    v_step = biasedRandomStep(baseDir, [1 10], 0.5);   % 长度1~6，20%侧偏
 
     
     P_pos_real = moveRealWithObstacles(G, P_pos_real, v_step);
