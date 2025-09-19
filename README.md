@@ -1,4 +1,4 @@
-# 粒子群算法 (PSO) 与 DBSCAN 的移动机器人自定位实验
+# 基于粒子群优化与粒子滤波算法的移动机器人自定位实验
 
 本仓库包含了基于 **粒子群优化 (Particle Swarm Optimization, PSO)** 与 **粒子滤波 Particle Filter（PF）** 的移动机器人自定位算法实现。  
 机器人在二维栅格地图中，通过模拟激光扫描 (8 个方向) 获取环境特征，结合群体智能优化与聚类方法实现位置估计与姿态追踪。  
@@ -54,10 +54,13 @@ PSO_PF/
 ## 实验结果
 **回字型**
 https://github.com/Alvis-Q-1999/RobotSelfLocalization/blob/main/PSO_PF/result/H1_pic.png
+
 **走廊型**
 https://github.com/Alvis-Q-1999/RobotSelfLocalization/blob/main/PSO_PF/result/L1_pic.png
+
 **随机型**
 https://github.com/Alvis-Q-1999/RobotSelfLocalization/blob/main/PSO_PF/result/R1_pic.png
+
 **障碍型**
 https://github.com/Alvis-Q-1999/RobotSelfLocalization/blob/main/PSO_PF/result/O1_pic.png
 
