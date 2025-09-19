@@ -63,5 +63,3 @@ https://github.com/Alvis-Q-1999/RobotSelfLocalization/blob/main/PSO_PF/result/R1
 
 **障碍型**
 https://github.com/Alvis-Q-1999/RobotSelfLocalization/blob/main/PSO_PF/result/O1_pic.png
-
-**障碍型**
