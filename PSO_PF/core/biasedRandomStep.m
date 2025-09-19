@@ -18,7 +18,7 @@ if rand < pTurn
     end
     ortho = sign(ortho);               % 压到 {-1,0,1}
     if all(ortho==0), ortho = [0 1]; end
-    jitter = ortho * randi([0 5]);     % 0或1格侧偏
+    jitter = ortho * randi([1 5]);     % 0或1格侧偏
     if rand<0.5, jitter = -jitter; end
     step = step + jitter;
 end
